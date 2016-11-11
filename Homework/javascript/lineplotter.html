@@ -375,10 +375,11 @@
 		20151231,78
 
 	</textarea>
+	<p>Leander de Kraker
+	10423354</p>
 	<script type="text/javascript">
 		// Get data from text area
 		var data = document.getElementById("rawdata").textContent.split("\n");
-		console.log("number of datapoints: " + data.length);
 		var date = [];
 		var temp = [];
 		var time = [];
@@ -403,32 +404,25 @@
 		var minTemp = Math.min.apply(null,temp);
 		var maxTemp = Math.max.apply(null,temp);
 		var tempAxis = [Math.floor(minTemp), Math.ceil(maxTemp)];
-		console.log(tempAxis)
 		
 		// Get time range for X axis data limits
 		var minTime = Math.min.apply(null, time);
 		var maxTime = Math.max.apply(null, time);
 		dateAxis = [minTime, maxTime];
 		
-		console.log(dateAxis)
 		// Transform data into screen coordinates
 		Xtransform = createTransform(lineGraphSizeX,dateAxis);
 		Ytransform = createTransform(lineGraphSizeY,tempAxis);
-		console.log(Ytransform)
 		
-		Xvalues = [];
+		var Xvalues = [];
 		var Yvalues = [];
 		
-		// Draw line!
+		// Draw lineplot!
 		ctx.beginPath();
 		ctx.moveTo(buffer,0);
 		for (i=0;i<time.length;i++){
 			Xvalues.push(Xtransform(time[i]));
 			Yvalues.push(Ytransform(temp[i]));
-			//console.log("time:                   " + time[i])
-			//console.log("transformed time:       " + Xvalues[i])
-			//console.log("temperature:            " + temp[i])
-			//console.log("transformed temperature:" + Yvalues[i])
 			ctx.lineTo(Xvalues[i],((canvasSizeY[1])-Yvalues[i]));
 		}
 		ctx.stroke();
@@ -448,7 +442,6 @@
 		tickXpos = [];
 		ctx.font = "13px Arial";
 		XtickSpace = (canvasSizeX[1]-buffer)/month.length;
-		console.log(XtickSpace)
 		for (i=0;i<month.length;i++){
 			Xticki = buffer+(XtickSpace*i);
 			ctx.fillText(month[i],Xticki,(canvasSizeY[1]-20));
@@ -476,8 +469,7 @@
 		}
 		ctx.closePath();
 		ctx.stroke()
-		console.log(YtickLabel)
-		
+
 		// Add Title
 		ctx.font = "20px Arial";
 		ctx.fillText("Temperature in 2015, at the Bilt",(canvasSizeX[1]/1.6),20);
@@ -487,11 +479,9 @@
 			// Transform data to screen position coordinates 
 			// domain is a two-element array of the data bounds [domain_min, domain_max]
 			// range is a two-element array of the screen bounds [range_min, range_max]
-
 			var alpha = (domain[1]-domain[0])/(range[1]-range[0]);
 			var beta = range[0]-(domain[0]/alpha);
-			console.log("alpha: "+ alpha)
-			console.log("beta: " + beta)
+
 			return function(x){
 				return alpha * (x - beta);
 			}
