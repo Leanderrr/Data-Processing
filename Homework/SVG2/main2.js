@@ -1,4 +1,4 @@
-/* use this to test out your function */
+/* Function by Leander de Kraker: 10423354 */
 window.onload = function() {
 	// Country codes
 	var countryCodes = [["af", "AFG", "Afghanistan"],
