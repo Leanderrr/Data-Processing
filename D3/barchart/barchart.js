@@ -36,7 +36,7 @@ d3.json("maxvis.json", function(error, data) {
 		else if (d.vis >= 50 && d.vis < 80){ // from 50(=5km) till 79 the visibility increases with 1km
 			d.vis = (d.vis-49)*1 + 5;}
 		else{d.vis = (d.vis-79)*5 + 30;} // from 80(=30km) on , one increase means 5km more visibility
-		d.vis = d.vis
+
     });
 	
 	// scale data range, necissary for axis
