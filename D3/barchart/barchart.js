@@ -43,7 +43,6 @@ d3.json("maxvis.json", function(error, data) {
 	x.domain(data.map(function(d){return d.date;}));
 	y.domain([0, d3.max(data, function(d) {return d.vis ;})]);
 	
-	console.log(data)
 	// append x-axis
 	svg.append("g") 
 		.attr("class", "x axis")
