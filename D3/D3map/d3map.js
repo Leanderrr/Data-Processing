@@ -224,11 +224,12 @@ ZWE : 36.35000646,
             .range(['#ffffe5','#004529']); // green colors
 
 	// fill dataset in appropriate format
-	// {Country {datavalue: value, fillcolor: color(value)},...}
+	// example = {countryCode {datavalue: value, fillcolor: color(value)},...}
     Object.keys(dataJSON).forEach(function(key){
         dataSet[key] = { forest:  parseInt(dataJSON[key]), fillColor: paletteScale(dataJSON[key])};
     });
 	
+	// Fill the entire map with the correct colors and interactive labels!
     var map = new Datamap({
         element: document.getElementById('container'),
 		fills: {
@@ -247,9 +248,55 @@ ZWE : 36.35000646,
 			}
 		}
     });
-	var svg =  d3.select("body")
-	.append("svg")
+	var width = 260,
+    height = 10;
+
+	// And now the legend..
+	var svg = d3.select("body").append("svg")
+		.attr("width", width)
+		.attr("height", height);
+
+	var gradient = svg.append("defs")
+	  .append("linearGradient")
+		.attr("id", "gradient")
+		.attr("x1", "0%")
+		.attr("y1", "0%")
+		.attr("x2", "100%")
+		.attr("y2", "0%")
+		.attr("spreadMethod", "pad");
+
+	gradient.append("stop")
+		.attr("offset", "0%")
+		.attr("stop-color", "#ffffe5")
+		
+	gradient.append("stop")
+		.attr("offset", "100%")
+		.attr("stop-color", '#004529')
+
+	svg.append("rect")
+		.attr("width", width)
+		.attr("height", height)
+		.style("fill", "url(#gradient)");
 	
-		//.fillcolor(paletteScale(maxiValue))
-	
+	svg.append("text")
+		.attr("class", "legendTitle")
+		.attr("x", 0)
+		.attr("y", -2)
+		.text("forestation");
+
+	//Define x-axis
+	var xScale = d3.scale.linear()
+	 .range([0, width])
+	 .domain([0, maxiValue] );
+
+	var xAxis = d3.svg.axis()
+		  .orient("bottom")
+		  .ticks(5)
+		  .scale(xScale);
+
+	//Set up X axis
+	svg.append("g")
+		.attr("class", "axis")
+		.attr("transform", "translate(" + (-Width/2) + "," + (10 + legendHeight) + ")")
+		.call(xAxis);
 }
