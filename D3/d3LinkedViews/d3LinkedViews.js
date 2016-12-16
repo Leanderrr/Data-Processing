@@ -36,7 +36,7 @@ function angle(d) {
   return a > 90 ? a - 180 : a;
 }
 // pie chart properties
-pieSizes = {width : 400, height : 300, radius : 100, buffer : 65 }
+pieSizes = {width : 350, height : 250, radius : 75, buffer : 65 }
 pieColor = ["#AA0000", "#0000AA", "#00AA00", "#333333"]; 
 
 
