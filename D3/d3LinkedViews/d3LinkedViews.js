@@ -11,8 +11,6 @@ button1.addEventListener("click", function() {mapPlot("greenhouse_Data_1990.csv"
 var button2 = document.getElementById("button2");
 button2.addEventListener("click", function() {mapPlot("greenhouse_Data_2012.csv", '2012')});
 
-var countries = Datamap.prototype.worldTopo.objects.world.geometries;
-
 // The datastructure that will be filled with the correctly layout data for D3 map
 var dataSet = {}; 
 
@@ -27,6 +25,7 @@ function pieData(d) {return [{'name':'CO2','value': d.CO2E},
 			{'name':'methane','value':d.METH},
 			{'name':'NO','value':d.NOXE},
 			{'name':'other','value':d.GHGO}];};
+			
 // Function that just returns the country name			
 function pieName(d) {return d.countryName};
 
@@ -37,7 +36,7 @@ function angle(d) {
 }
 // pie chart properties
 pieSizes = {width : 350, height : 250, radius : 75, buffer : 65 }
-pieColor = ["#AA0000", "#0000AA", "#00AA00", "#333333"]; 
+pieColor = ["#AA0000", "#0000AA", "#00AA00", "#535353"]; 
 
 
 
@@ -157,6 +156,9 @@ function mapPlot(dataYear, year){
 		
 		// Pie chart plot function
 		function plot(id) {
+			// Prevent piechart from dissapearing if no country id was retrieved my mousclick function
+			if (id == undefined){return};
+			// Remove previous piechart
 			d3.select("#pieChart").remove();
 			
 			// Pie chart properties
